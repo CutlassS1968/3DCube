@@ -7,9 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
@@ -25,6 +22,7 @@ public class DrawShapes {
   GraphicsDevice gd;
   GraphicsEnvironment ge;
   GraphicsConfiguration gc;
+  HyperCube cube;
 
   boolean isRunning = false;
 
@@ -32,8 +30,7 @@ public class DrawShapes {
     frame = new JFrame("Demo");
     frame.setIgnoreRepaint(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setResizable(false);
-
+    frame.setResizable(true);
 
     canvas = new Canvas();
     canvas.setIgnoreRepaint(true);
@@ -47,7 +44,7 @@ public class DrawShapes {
     frame.pack();
 
     frame.setLocationRelativeTo(null);
-    frame.setVisible(false);
+    frame.setVisible(true);
 
     canvas.createBufferStrategy(2);
     b = canvas.getBufferStrategy();
@@ -61,7 +58,7 @@ public class DrawShapes {
     g2D = null;
     isRunning = true;
 
-    HyperCube cube = new HyperCube(5);
+    cube = new HyperCube(3);
 
     draw();
   }
@@ -77,9 +74,18 @@ public class DrawShapes {
         g2D.fillRect(0, 0, 500, 500);
 
         g2D.setColor(Color.DARK_GRAY);
-        g2D.fill(new Ellipse2D.Double(250, 250, 30, 30));
 
-//        g2D.draw(new Cube());
+        // Draw Vertices
+        g2D.setColor(Color.DARK_GRAY);
+        for (int i = 0; i < cube.getVertices().length; i++) {
+          g2D.fill(cube.getVertices()[i]);
+        }
+
+        // Draw Edges
+        g2D.setColor(Color.DARK_GRAY);
+        for (int i = 0; i < cube.getEdges().size(); i++) {
+          g2D.draw(cube.getEdges().get(i));
+        }
 
         graphics = b.getDrawGraphics();
         graphics.drawImage(buffer, 0, 0, null);

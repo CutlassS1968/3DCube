@@ -1,12 +1,10 @@
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-public class HyperCube implements Shape {
+// TODO: something's wrong with the vertex-graycode mapping OR drawing for non 3 dimensional cubes
+
+public class HyperCube {
+
   private ArrayList<Edge> edges;
   private Vertex[] vertices;
   private ArrayList<String> labels;
@@ -24,18 +22,27 @@ public class HyperCube implements Shape {
       vertices[i] = new Vertex(labels.get(i));
     }
 
+    plot();
+
     // map vertices onto edges
     for (int i = 0; i < vertices.length; i++) {
       for (int j = i + 1; j < vertices.length; j++) {
         if (adjacency(vertices[i].getCode(), vertices[j].getCode())) {
           edges.add(new Edge(vertices[i], vertices[j]));
-          System.out.println(i + ", " + j);
+//          System.out.println(i + ", " + j);
         }
       }
     }
+  }
 
-    edges = new ArrayList<>();
-    labelVertices();
+  public void plot() {
+    double d = (360.0/vertices.length) * (Math.PI/180);
+    for (int i = 0; i < vertices.length; i++) {
+      int x = (int)((250) + (100*Math.cos(d*i)));
+      int y = (int)((250) + (100*Math.sin(d*i)));
+      vertices[i].setCenter(new Point2D.Double(x, y));
+      System.out.println(vertices[i].getX() + ", " + vertices[i].getY());
+    }
   }
 
   /**
@@ -81,66 +88,28 @@ public class HyperCube implements Shape {
     return t;
   }
 
-  // Create a list of labels, after calculated, translate to vertices
-  private void labelVertices() {
-
+  public ArrayList<Edge> getEdges() {
+    return edges;
   }
 
-  private void resizeLabels() {
-    for (int i = 0; i < labels.size(); i++) {
-
-
-    }
+  public void setEdges(ArrayList<Edge> edges) {
+    this.edges = edges;
   }
 
-
-  @Override
-  public Rectangle getBounds() {
-    return null;
+  public Vertex[] getVertices() {
+    return vertices;
   }
 
-  @Override
-  public Rectangle2D getBounds2D() {
-    return null;
+  public void setVertices(Vertex[] vertices) {
+    this.vertices = vertices;
   }
 
-  @Override
-  public boolean contains(double x, double y) {
-    return false;
+  public ArrayList<String> getLabels() {
+    return labels;
   }
 
-  @Override
-  public boolean contains(Point2D p) {
-    return false;
+  public void setLabels(ArrayList<String> labels) {
+    this.labels = labels;
   }
 
-  @Override
-  public boolean intersects(double x, double y, double w, double h) {
-    return false;
-  }
-
-  @Override
-  public boolean intersects(Rectangle2D r) {
-    return false;
-  }
-
-  @Override
-  public boolean contains(double x, double y, double w, double h) {
-    return false;
-  }
-
-  @Override
-  public boolean contains(Rectangle2D r) {
-    return false;
-  }
-
-  @Override
-  public PathIterator getPathIterator(AffineTransform at) {
-    return null;
-  }
-
-  @Override
-  public PathIterator getPathIterator(AffineTransform at, double flatness) {
-    return null;
-  }
 }

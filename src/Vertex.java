@@ -1,24 +1,23 @@
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.HashSet;
-//import org.jgrapht.generate;
 
-public class Vertex extends Point2D.Double {
-  /* What data structure to use for labels:
-    - Order matters
-    - Flexible in size
-    - Copy and switch values easily
-    - Easily manipulate values
-
-    Arrays cant change in size easily
-    ArrayList of Chars
-   */
-
+public class Vertex extends Ellipse2D.Double {
   private String code;
+  private int r;
 
   public Vertex(String code) {
-    super(0, 0);
+    super(0.0, 0.0, 20, 20);
+    r = 10;
     this.code = code;
+  }
+
+  public int getRadius() {
+    return r;
+  }
+
+  public void setRadius(int r) {
+    this.height = 2*r;
+    this.width = 2*r;
   }
 
   public String getCode() {
@@ -27,6 +26,15 @@ public class Vertex extends Point2D.Double {
 
   public void setCode(String code) {
     this.code = code;
+  }
+
+  public Point2D.Double getCenter() {
+    return new Point2D.Double(this.x + r, this.y + r);
+  }
+
+  public void setCenter(Point2D.Double center) {
+    this.x = center.getX();
+    this.y = center.getY();
   }
 
 }
