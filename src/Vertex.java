@@ -14,17 +14,19 @@ public class Vertex extends Point2D.Double {
     ArrayList of Chars
    */
 
-  private ArrayList<String> label;
+  private String code;
 
-  public Vertex() {
+  public Vertex(String code) {
     super(0, 0);
+    this.code = code;
   }
 
-  public void setLabel(ArrayList<String> label) {
-    this.label = label;
+  public String getCode() {
+    return this.code;
   }
 
-  public ArrayList<String> getLabel() {
-    return label;
+  public void setCode(String code) {
+    this.code = code;
   }
+
 }

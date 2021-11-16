@@ -7,19 +7,55 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class Cube implements Shape {
+public class HyperCube implements Shape {
   private ArrayList<Edge> edges;
   private Vertex[] vertices;
   private ArrayList<String> labels;
 
-  public Cube() {
+  public HyperCube(int n) {
     vertices = new Vertex[8];
     edges = new ArrayList<>();
-    labels = new ArrayList<String>();
-    for (int i = 0; i < vertices.length; i++) vertices[i] = new Vertex();
+
+    labels = grayCode(n, new ArrayList<>());
+
+    for (int i = 0; i < vertices.length; i++) {
+      vertices[i] = new Vertex(labels.get(i));
+    }
+
+    System.out.println(grayCode(3, new ArrayList<String>()));
+
 
     edges = new ArrayList<>();
     labelVertices();
+  }
+
+  public ArrayList<String> grayCode(int n, ArrayList<String> l) {
+    l.add("");
+    for (int i = 0; i < n; i++) {
+      ArrayList<String> t = flip(l);
+      concat(t, "1");
+      concat(l, "0");
+      l.addAll(t);
+    }
+    return l;
+  }
+
+  private ArrayList<String> concat(ArrayList<String> l, String n) {
+    for (int i = 0; i < l.size(); i++) {
+      String str;
+      str = l.get(i);
+      str = n + str;
+      l.set(i, str);
+    }
+    return l;
+  }
+
+  private ArrayList<String> flip(ArrayList<String> l) {
+    ArrayList<String> t = new ArrayList<>();
+    for (int i = l.size() - 1; i >= 0; i--) {
+      t.add(l.get(i));
+    }
+    return t;
   }
 
   // Create a list of labels, after calculated, translate to vertices

@@ -34,6 +34,7 @@ public class DrawShapes {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setResizable(false);
 
+
     canvas = new Canvas();
     canvas.setIgnoreRepaint(true);
     canvas.setSize(500, 500);
@@ -46,7 +47,7 @@ public class DrawShapes {
     frame.pack();
 
     frame.setLocationRelativeTo(null);
-    frame.setVisible(true);
+    frame.setVisible(false);
 
     canvas.createBufferStrategy(2);
     b = canvas.getBufferStrategy();
@@ -60,7 +61,7 @@ public class DrawShapes {
     g2D = null;
     isRunning = true;
 
-    Cube cube = new Cube();
+    HyperCube cube = new HyperCube(3);
 
     draw();
   }
