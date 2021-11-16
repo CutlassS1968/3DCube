@@ -61,7 +61,7 @@ public class DrawShapes {
     g2D = null;
     isRunning = true;
 
-    HyperCube cube = new HyperCube(3);
+    HyperCube cube = new HyperCube(5);
 
     draw();
   }

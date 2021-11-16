@@ -5,7 +5,6 @@ import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Set;
 
 public class HyperCube implements Shape {
   private ArrayList<Edge> edges;
@@ -13,23 +12,47 @@ public class HyperCube implements Shape {
   private ArrayList<String> labels;
 
   public HyperCube(int n) {
-    vertices = new Vertex[8];
+    // number of vertices is n^2 - 1
+    vertices = new Vertex[((int)Math.pow(n, 2) - 1)];
     edges = new ArrayList<>();
 
-    labels = grayCode(n, new ArrayList<>());
+    // generate n-bit gray code
+    labels = nBitCode(n, new ArrayList<>());
 
+    // map code onto vertices
     for (int i = 0; i < vertices.length; i++) {
       vertices[i] = new Vertex(labels.get(i));
     }
 
-    System.out.println(grayCode(3, new ArrayList<String>()));
-
+    // map vertices onto edges
+    for (int i = 0; i < vertices.length; i++) {
+      for (int j = i + 1; j < vertices.length; j++) {
+        if (adjacency(vertices[i].getCode(), vertices[j].getCode())) {
+          edges.add(new Edge(vertices[i], vertices[j]));
+          System.out.println(i + ", " + j);
+        }
+      }
+    }
 
     edges = new ArrayList<>();
     labelVertices();
   }
 
-  public ArrayList<String> grayCode(int n, ArrayList<String> l) {
+  /**
+   * returns false if difference is greater than 1 char
+   * @param l Code 1
+   * @param t Code 2
+   * @return adjacency
+   */
+  private boolean adjacency(String l, String t) {
+    int c = 0;
+    for (int i = 0; i < l.length(); i++) {
+      if (!l.substring(i,i+1).equals(t.substring(i,i+1))) c++;
+    }
+    return c <= 1;
+  }
+
+  public ArrayList<String> nBitCode(int n, ArrayList<String> l) {
     l.add("");
     for (int i = 0; i < n; i++) {
       ArrayList<String> t = flip(l);
