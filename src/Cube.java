@@ -5,47 +5,35 @@ import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class Cube implements Shape {
   private ArrayList<Edge> edges;
   private Vertex[] vertices;
+  private ArrayList<String> labels;
 
   public Cube() {
     vertices = new Vertex[8];
-    for (int i = 0; i < vertices.length; i++) {
-      vertices[i] = new Vertex();
-    }
-    edges = new ArrayList<Edge>();
-    for (int i = 0; i < vertices.length; i++) {
-      for (int j = i+1; j < vertices.length; j++) {
-        if (i!=0 && i != vertices.length) {
-          if (i % 2 == 0) { //i is even
-            if (j % 2 != 0 && i + 3 != j) {
-              edges.add(new Edge(vertices[i], vertices[j]));
-              System.out.println("Draw Edge:" + i + ", " + j);
-            }
-          } else { //i is odd
-            if (j % 2 == 0 && i - 3 != j) {
-              edges.add(new Edge(vertices[i], vertices[j]));
-              System.out.println("Draw Edge:" + i + ", " + j);
-            }
-          }
-        } else {
-          if (i%2==0) {
-            if (j % 2 != 0 && i + 7 != j) {
-              edges.add(new Edge(vertices[i], vertices[j]));
-              System.out.println("Draw Edge:" + i + ", " + j);
-            }
-          } else {
-            if (j%2==0 && i - 7 == j) {
-              edges.add(new Edge(vertices[i], vertices[j]));
-              System.out.println("Draw Edge:" + i + ", " + j);
-            }
-          }
-        }
-      }
+    edges = new ArrayList<>();
+    labels = new ArrayList<String>();
+    for (int i = 0; i < vertices.length; i++) vertices[i] = new Vertex();
+
+    edges = new ArrayList<>();
+    labelVertices();
+  }
+
+  // Create a list of labels, after calculated, translate to vertices
+  private void labelVertices() {
+
+  }
+
+  private void resizeLabels() {
+    for (int i = 0; i < labels.size(); i++) {
+
+
     }
   }
+
 
   @Override
   public Rectangle getBounds() {
